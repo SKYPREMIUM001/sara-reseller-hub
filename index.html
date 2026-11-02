@@ -46,7 +46,7 @@
             max-width: 860px;
         }
 
-        /* LOGIN SCREEN */
+        /* 1. LOGIN SCREEN */
         #authCard {
             background: var(--bg-window);
             border: 2px solid var(--neon-pink);
@@ -79,7 +79,7 @@
             text-transform: uppercase;
         }
 
-        /* DASHBOARD */
+        /* 2. RESELLER DASHBOARD */
         .neon-card {
             background: var(--bg-card);
             border: 2px solid #581c87;
@@ -450,7 +450,7 @@
             </form>
         </div>
 
-        <!-- GENERATED KEYS -->
+        <!-- GENERATED KEYS TABLE -->
         <div class="neon-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap:wrap; gap:10px;">
                 <div>
@@ -482,8 +482,9 @@
 </div>
 
 <script>
-    const FIREBASE_RESELLERS = "https://skymodsloader-default-rtdb.firebaseio.com/resellers";
-    const FIREBASE_KEYS = "https://skymodsloader-default-rtdb.firebaseio.com/keys";
+    // UPDATED WITH NEW FIREBASE REALTIME DATABASE URL
+    const FIREBASE_RESELLERS = "https://sara-e4b8a-default-rtdb.firebaseio.com/resellers";
+    const FIREBASE_KEYS = "https://sara-e4b8a-default-rtdb.firebaseio.com/keys";
 
     let currentReseller = null;
     let myKeysList = [];
