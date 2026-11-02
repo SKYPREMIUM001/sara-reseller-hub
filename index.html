@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARA OFFICIAL - Reseller Portal</title>
+    <style>
+        :root {
+            --bg-body: #040108;
+            --bg-window: #080212;
+            --bg-card: rgba(18, 6, 33, 0.92);
+            --bg-input: #180931;
+            --border-purple: #3e1469;
+            --neon-pink: #e024c3;
+            --neon-purple: #a855f7;
+            --neon-violet: #c026d3;
+            --gold: #fbbf24;
+            --text-white: #ffffff;
+            --text-dim: #c4b5fd;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-white);
+            padding: 14px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 10% 15%, rgba(168, 85, 247, 0.22), transparent 40%),
+                radial-gradient(circle at 90% 85%, rgba(224, 36, 195, 0.18), transparent 45%);
+        }
+
+        .portal-wrapper {
+            width: 100%;
+            max-width: 860px;
+        }
+
+        /* LOGIN SCREEN */
+        #authCard {
+            background: var(--bg-window);
+            border: 2px solid var(--neon-pink);
+            border-radius: 20px;
+            padding: 34px 28px;
+            box-shadow: 0 0 35px rgba(224, 36, 195, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.2);
+            text-align: center;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .brand-title {
+            font-size: 32px;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: 2px;
+            background: linear-gradient(180deg, #ffffff 10%, #f5d0fe 45%, #c026d3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px rgba(224, 36, 195, 0.7);
+            margin-bottom: 4px;
+        }
+
+        .brand-sub {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        /* DASHBOARD */
+        .neon-card {
+            background: var(--bg-card);
+            border: 2px solid #581c87;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 0 30px rgba(88, 28, 135, 0.4);
+            margin-bottom: 22px;
+        }
+
+        .dash-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-bottom: 18px;
+            border-bottom: 1.5px solid #3b1464;
+            margin-bottom: 20px;
+        }
+
+        .user-tag {
+            font-size: 13px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .user-tag b {
+            color: #ffffff;
+            font-size: 15px;
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .credit-badge-glow {
+            background: rgba(224, 36, 195, 0.15);
+            border: 1.5px solid var(--neon-pink);
+            color: #fdf4ff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 800;
+            box-shadow: 0 0 18px rgba(224, 36, 195, 0.4);
+            display: inline-block;
+        }
+
+        .btn-signout {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid var(--danger);
+            color: #fca5a5;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-signout:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .panel-badge {
+            background: linear-gradient(90deg, #701a75, #4c1d95, #701a75);
+            border: 1.5px solid var(--neon-pink);
+            border-radius: 12px;
+            padding: 8px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+            box-shadow: 0 0 16px rgba(224, 36, 195, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #e9d5ff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        input, select {
+            background: var(--bg-input);
+            border: 1.5px solid #4c1d95;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 14px;
+            outline: none;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(224, 36, 195, 0.4);
+            background: #200c3e;
+        }
+
+        .cost-strip {
+            grid-column: 1 / -1;
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px dashed var(--gold);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: var(--gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-generate {
+            background: linear-gradient(90deg, #c026d3 0%, #e024c3 50%, #9333ea 100%);
+            border: 1.5px solid #f472b6;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 14px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 0 25px rgba(224, 36, 195, 0.6);
+            transition: all 0.25s ease;
+        }
+
+        .btn-generate:hover {
+            box-shadow: 0 0 35px rgba(224, 36, 195, 0.85);
+            transform: translateY(-1px);
+        }
+
+        .btn-generate:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* TABLE */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 680px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #17082e;
+            color: var(--text-dim);
+            padding: 12px 10px;
+            border-bottom: 1.5px solid #3b1464;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #2e1065;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .key-text {
+            font-family: monospace;
+            color: #f5d0fe;
+            background: rgba(224, 36, 195, 0.15);
+            border: 1px solid rgba(224, 36, 195, 0.4);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .device-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-blocked {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-sm {
+            padding: 5px 9px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: 0.15s;
+        }
+
+        .btn-copy {
+            background: #271342;
+            border: 1px solid #4c1d95;
+            color: #e9d5ff;
+        }
+
+        .btn-deactivate {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid var(--danger);
+        }
+
+        .btn-activate {
+            background: rgba(16, 185, 129, 0.2);
+            color: #86efac;
+            border: 1px solid var(--success);
+        }
+
+        .btn-delete {
+            background: #200d38;
+            color: #f1f5f9;
+            border: 1px solid #4c1d95;
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="portal-wrapper">
+    <!-- 1. LOGIN SCREEN -->
+    <div id="authCard">
+        <div class="brand-title">SARA OFFICIAL</div>
+        <div class="brand-sub">👑 AUTHORIZED RESELLER PORTAL</div>
+
+        <form onsubmit="handleResellerLogin(event)">
+            <div class="form-group" style="margin-bottom: 14px;">
+                <label>👤 Reseller Username</label>
+                <input type="text" id="resellerUsernameInput" placeholder="Enter assigned username" required autofocus>
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>🔒 Password</label>
+                <input type="password" id="resellerPasswordInput" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-generate" id="loginBtn">
+                <span>⚡</span> Sign In to Reseller Portal
+            </button>
+        </form>
+    </div>
+
+    <!-- 2. RESELLER DASHBOARD -->
+    <div id="dashboardSection" style="display: none;">
+        <div class="neon-card">
+            <div class="dash-topbar">
+                <div class="user-tag">
+                    <span>👑 Reseller:</span>
+                    <b id="displayResellerName"></b>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div class="credit-badge-glow">
+                        Balance: <span id="displayResellerCredits" style="color:var(--gold);">0</span> Credits
+                    </div>
+                    <button class="btn-signout" onclick="logout()">Sign Out</button>
+                </div>
+            </div>
+
+            <div class="panel-badge">
+                <span>👑</span> Generate Customer Key
+            </div>
+
+            <form onsubmit="handleGenerateKey(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>👤 Customer Name</label>
+                        <input type="text" id="buyerName" placeholder="e.g. John VIP, Aryan" required>
+                    </div>
+                    <div class="form-group">
+                        <label>🕒 Duration / Validity</label>
+                        <select id="keyDays" onchange="calculateCost()">
+                            <option value="1">1 Day</option>
+                            <option value="2">2 Days</option>
+                            <option value="7">7 Days (1 Week)</option>
+                            <option value="15">15 Days</option>
+                            <option value="30">30 Days (1 Month)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>🔲 Allowed Devices</label>
+                        <select id="keyDevices" onchange="calculateCost()">
+                            <option value="1">1 Device</option>
+                            <option value="2">2 Devices</option>
+                            <option value="3">3 Devices</option>
+                            <option value="5">5 Devices</option>
+                            <option value="10">10 Devices</option>
+                            <option value="15">15 Devices</option>
+                            <option value="100">100 Devices</option>
+                            <option value="200">200 Devices</option>
+                            <option value="Unlimited">Unlimited Devices</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>🛡️ Key Prefix</label>
+                        <input type="text" id="keyPrefix" value="SARA" placeholder="e.g. SARA">
+                    </div>
+
+                    <div class="cost-strip">
+                        <span>Formula: <b>Days × Devices</b></span>
+                        <b id="calculatedCostText">Cost: 1 Credit</b>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-generate" id="genKeyBtn">
+                    <span>⚡</span> + GENERATE SARA KEY
+                </button>
+            </form>
+        </div>
+
+        <!-- GENERATED KEYS -->
+        <div class="neon-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap:wrap; gap:10px;">
+                <div>
+                    <h3 style="font-size: 16px; color: #ffffff; letter-spacing: 0.5px;">🔑 Your Active License Keys</h3>
+                    <span style="font-size: 11px; color: var(--text-dim);">Expired keys are automatically hidden</span>
+                </div>
+                <button class="btn-sm btn-copy" onclick="fetchMyKeys()">Refresh Keys</button>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>License Key</th>
+                            <th>Time Left</th>
+                            <th>Devices (Used / Max)</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resellerKeysTbody">
+                        <tr><td colspan="6" style="text-align:center; padding: 16px;">Loading your keys...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const FIREBASE_RESELLERS = "https://skymodsloader-default-rtdb.firebaseio.com/resellers";
+    const FIREBASE_KEYS = "https://skymodsloader-default-rtdb.firebaseio.com/keys";
+
+    let currentReseller = null;
+    let myKeysList = [];
+
+    function randomString(length = 4) {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let res = "";
+        for (let i = 0; i < length; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+        return res;
+    }
+
+    function calculateCost() {
+        const days = parseInt(document.getElementById("keyDays").value) || 1;
+        const devVal = document.getElementById("keyDevices").value;
+        const devMultiplier = devVal === "Unlimited" ? 50 : (parseInt(devVal) || 1);
+        const cost = days * devMultiplier;
+        document.getElementById("calculatedCostText").innerText = `Cost: ${cost} Credits (${days}d × ${devVal} dev)`;
+        return cost;
+    }
+
+    async function handleResellerLogin(e) {
+        e.preventDefault();
+        const user = document.getElementById("resellerUsernameInput").value.trim().toLowerCase();
+        const pass = document.getElementById("resellerPasswordInput").value.trim();
+        const btn = document.getElementById("loginBtn");
+
+        btn.disabled = true;
+
+        try {
+            const res = await fetch(`${FIREBASE_RESELLERS}/${user}.json`);
+            const data = await res.json();
+
+            if (!data || data.password !== pass) {
+                alert("Invalid Reseller Username or Password!");
+                btn.disabled = false;
+                return;
+            }
+
+            if (data.status === "blocked") {
+                alert("Your Reseller account has been blocked by Admin!");
+                btn.disabled = false;
+                return;
+            }
+
+            currentReseller = data;
+            localStorage.setItem("sara_reseller_session", JSON.stringify(data));
+            loadDashboard();
+        } catch (err) {
+            alert("Network Error: " + err.message);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    function loadDashboard() {
+        document.getElementById("authCard").style.display = "none";
+        document.getElementById("dashboardSection").style.display = "block";
+        document.getElementById("displayResellerName").innerText = currentReseller.username.toUpperCase();
+        document.getElementById("displayResellerCredits").innerText = currentReseller.credits || 0;
+        calculateCost();
+        fetchMyKeys();
+    }
+
+    async function handleGenerateKey(e) {
+        e.preventDefault();
+        const buyer = document.getElementById("buyerName").value.trim();
+        const days = parseInt(document.getElementById("keyDays").value);
+        const devices = document.getElementById("keyDevices").value;
+        const prefix = document.getElementById("keyPrefix").value.trim() || "SARA";
+        const cost = calculateCost();
+        const btn = document.getElementById("genKeyBtn");
+
+        if (currentReseller.credits < cost) {
+            alert(`Insufficient credits! Required: ${cost} Credits, Available: ${currentReseller.credits} Credits.\nPlease contact Admin (SOHAIL) to recharge.`);
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerText = "Generating SARA Key...";
+
+        const newKey = `${prefix}-${randomString(4)}-${randomString(4)}`;
+        let exp = new Date();
+        exp.setDate(exp.getDate() + days);
+
+        const keyData = {
+            customer_name: buyer,
+            key: newKey,
+            key_type: "mod_menu",
+            durationDays: days,
+            expires_at: exp.toISOString(),
+            max_devices: devices,
+            bound_devices: "",
+            status: "active",
+            created_by: currentReseller.username,
+            credits_deducted: cost,
+            created_at: new Date().toISOString()
+        };
+
+        const remainingCredits = currentReseller.credits - cost;
+        const totalKeys = (currentReseller.total_keys_generated || 0) + 1;
+
+        try {
+            await fetch(`${FIREBASE_KEYS}/${newKey}.json`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(keyData)
+            });
+
+            await fetch(`${FIREBASE_RESELLERS}/${currentReseller.username}.json`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    credits: remainingCredits,
+                    total_keys_generated: totalKeys
+                })
+            });
+
+            currentReseller.credits = remainingCredits;
+            currentReseller.total_keys_generated = totalKeys;
+            localStorage.setItem("sara_reseller_session", JSON.stringify(currentReseller));
+            document.getElementById("displayResellerCredits").innerText = remainingCredits;
+
+            alert(`SARA Key Generated Successfully!\nKey: ${newKey}\nCredits Deducted: ${cost}`);
+            document.getElementById("buyerName").value = "";
+            fetchMyKeys();
+        } catch (err) {
+            alert("Error: " + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerText = "+ GENERATE SARA KEY";
+        }
+    }
+
+    async function fetchMyKeys() {
+        const tbody = document.getElementById("resellerKeysTbody");
+        try {
+            const res = await fetch(`${FIREBASE_KEYS}.json`);
+            const data = await res.json();
+            const allKeys = data ? Object.values(data).reverse() : [];
+            const now = new Date().getTime();
+            
+            myKeysList = allKeys.filter(k => {
+                if (k.created_by !== currentReseller.username) return false;
+                const expiry = new Date(k.expires_at).getTime();
+                if (expiry <= now) return false;
+                return true;
+            });
+
+            if (myKeysList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 16px; color:var(--text-dim);">No active keys generated yet.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = "";
+            myKeysList.forEach(k => {
+                let boundCount = 0;
+                if (k.bound_devices) {
+                    if (Array.isArray(k.bound_devices)) {
+                        boundCount = k.bound_devices.filter(Boolean).length;
+                    } else if (typeof k.bound_devices === "object") {
+                        boundCount = Object.keys(k.bound_devices).length;
+                    } else if (typeof k.bound_devices === "string") {
+                        const str = k.bound_devices.trim();
+                        if (str !== "") {
+                            boundCount = str.includes(",") ? str.split(",").filter(Boolean).length : 1;
+                        }
+                    }
+                }
+
+                const maxDevStr = k.max_devices || "1";
+                const isLimitReached = (maxDevStr !== "Unlimited" && boundCount >= parseInt(maxDevStr));
+
+                const deviceBadge = `
+                    <span class="device-badge" style="background: ${boundCount > 0 ? (isLimitReached ? 'rgba(239, 68, 68, 0.15)' : 'rgba(245, 158, 11, 0.15)') : 'rgba(148, 163, 184, 0.1)'}; 
+                                                      color: ${boundCount > 0 ? (isLimitReached ? 'var(--danger)' : 'var(--warning)') : 'var(--text-dim)'}; 
+                                                      border: 1px solid ${boundCount > 0 ? (isLimitReached ? 'var(--danger)' : 'var(--warning)') : 'var(--border-purple)'};">
+                        ${boundCount} / ${maxDevStr} Logged
+                    </span>
+                `;
+
+                const diff = new Date(k.expires_at).getTime() - now;
+                const daysLeft = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hoursLeft = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const timeLeftText = `${daysLeft}d ${hoursLeft}h`;
+
+                const isBlocked = k.status === "blocked";
+                const statusBadge = isBlocked 
+                    ? `<span class="status-badge status-blocked">Blocked</span>` 
+                    : `<span class="status-badge status-active">Active</span>`;
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td style="color:#fff; font-weight:700;">${k.customer_name}</td>
+                    <td><span class="key-text">${k.key}</span></td>
+                    <td style="color:var(--text-dim);">${timeLeftText}</td>
+                    <td>${deviceBadge}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-sm btn-copy" onclick="copyKey('${k.key}')">Copy</button>
+                            ${isBlocked 
+                                ? `<button class="btn-sm btn-activate" onclick="toggleKeyStatus('${k.key}', 'active')">Activate</button>`
+                                : `<button class="btn-sm btn-deactivate" onclick="toggleKeyStatus('${k.key}', 'blocked')">Block</button>`
+                            }
+                            <button class="btn-sm btn-delete" onclick="deleteMyKey('${k.key}')">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function toggleKeyStatus(key, newStatus) {
+        const target = myKeysList.find(k => k.key === key);
+        if (!target) return;
+
+        const actionWord = newStatus === "blocked" ? "Block" : "Activate";
+        if (!confirm(`Are you sure you want to ${actionWord} key: ${key}?`)) return;
+
+        try {
+            await fetch(`${FIREBASE_KEYS}/${key}.json`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: newStatus })
+            });
+            fetchMyKeys();
+        } catch (err) {
+            alert("Error updating key: " + err.message);
+        }
+    }
+
+    async function deleteMyKey(key) {
+        const target = myKeysList.find(k => k.key === key);
+        if (!target) return;
+
+        if (!confirm(`Are you sure you want to delete key: ${key}?`)) return;
+
+        try {
+            await fetch(`${FIREBASE_KEYS}/${key}.json`, { method: "DELETE" });
+            fetchMyKeys();
+        } catch (err) {
+            alert("Error deleting key: " + err.message);
+        }
+    }
+
+    function copyKey(k) {
+        navigator.clipboard.writeText(k).then(() => alert("Copied: " + k));
+    }
+
+    function logout() {
+        localStorage.removeItem("sara_reseller_session");
+        location.reload();
+    }
+
+    window.onload = function() {
+        const saved = localStorage.getItem("sara_reseller_session");
+        if (saved) {
+            currentReseller = JSON.parse(saved);
+            fetch(`${FIREBASE_RESELLERS}/${currentReseller.username}.json`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data && data.status !== "blocked") {
+                        currentReseller = data;
+                        localStorage.setItem("sara_reseller_session", JSON.stringify(data));
+                        loadDashboard();
+                    } else {
+                        logout();
+                    }
+                })
+                .catch(() => loadDashboard());
+        }
+    };
+</script>
+</body>
+</html>
